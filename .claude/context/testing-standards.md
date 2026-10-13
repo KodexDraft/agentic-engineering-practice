@@ -6,7 +6,6 @@ Follow these rules when writing tests for the Taskr API.
 
 - Test files are named `<resource>.test.js`, all lowercase: `tasks.test.js`, `projects.test.js`, `tags.test.js`.
 - They live in `tests/`.
-- Do not copy the inconsistent names of older files (`userTest.js`, `test-projects.js`).
 
 ## 2. Tools and database
 
@@ -18,9 +17,9 @@ Follow these rules when writing tests for the Taskr API.
 process.env.NODE_ENV = 'test';
 
 const request = require('supertest');
-const app = require('../index');
-const { db } = require('../DB');
-const { createSchema } = require('./schema');
+const app = require('../src/index');
+const { db } = require('../src/db/connection');
+const { createSchema } = require('../src/db/schema');
 
 beforeAll(() => {
   createSchema(db);

@@ -1,6 +1,6 @@
 # API Conventions: adding a new endpoint
 
-Follow these rules when adding a new endpoint to the Taskr API. They describe the target structure **after the refactor**: new code goes in `src/`, not in the flat root files (`routes.js`, `index.js`, etc.). Do not add new route logic to `routes.js`.
+Follow these rules when adding a new endpoint to the Taskr API. All source code lives in `src/`, layered as `routes -> services -> db/queries`.
 
 ## 1. Route files
 
@@ -23,6 +23,7 @@ module.exports = { tagsRouter };
 ## 2. Handlers call services
 
 - Route handlers contain no business logic: no SQL, no validation rules, no data shaping.
+- SQL lives only in `src/db/queries/<resource>.js`; services call queries, never `db` directly.
 - Every handler calls a corresponding function in `src/services/` and sends back the result.
 - The service file has the same resource name as the route file: `src/routes/tags.js` calls `src/services/tags.js`.
 
@@ -50,19 +51,20 @@ next({ status: 404, message: 'Tag not found' });
 
 ## 4. Registering the router
 
-- Register every router in `src/index.js` with `app.use`, using the resource path and the imported router:
+- Register every router in `src/routes/index.js` with `router.use`, using the resource path and the imported router:
 
 ```js
-const { tagsRouter } = require('./routes/tags');
+const { tagsRouter } = require('./tags');
 
-app.use('/tags', tagsRouter);
+router.use('/tags', tagsRouter);
 ```
 
-- Register routers before the error-handling middleware.
+- `src/index.js` mounts that combined router before the error-handling middleware.
+- Nested resources (e.g. `/tasks/:id/comments`) use `express.Router({ mergeParams: true })` and are registered before `/tasks`.
 
 ## Checklist for a new endpoint
 
-1. Create or extend `src/services/<resource>.js` with the business logic.
+1. Add SQL to `src/db/queries/<resource>.js` and business logic to `src/services/<resource>.js`.
 2. Create or extend `src/routes/<resource>.js` (lowercase plural) with a thin handler that calls the service and forwards errors to `next`.
-3. Export the router by name and register it in `src/index.js` with `app.use('/<resource>', <resource>Router)`.
+3. Export the router by name and register it in `src/routes/index.js` with `router.use('/<resource>', <resource>Router)`.
 4. Add tests in `tests/<resource>.test.js`.
