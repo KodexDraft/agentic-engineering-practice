@@ -46,7 +46,23 @@ src/
 - Only `src/db/queries/*` touches `db`. Do not import `db` from services or routes.
 - Add new endpoints following `.claude/context/api-conventions.md`.
 - Put new helpers in the most specific module. Do not create catch-all files (`utils.js`, `helpers.js`, `misc/`).
-- Keep file names kebab-case; test files are `<resource>.test.js`.
+
+## Naming conventions
+
+- All file and directory names are kebab-case (`error-handler.js`, `request-logger.js`); no camelCase or PascalCase file names.
+- Route, service and query files use the lowercase plural resource name and share it across layers: `src/routes/tags.js` -> `src/services/tags.js` -> `src/db/queries/tags.js`.
+- Routers are exported by name (`{ tagsRouter }`); services and queries export plain function objects.
+- Test files are `tests/<resource>.test.js`.
+
+## Never do these things
+
+- Never add SQL or `db` access to `src/routes/` or `src/services/`; it belongs in `src/db/queries/`.
+- Never put business logic, validation or `res.status(4xx)` in a route handler; call a service and forward errors with `next(err)`.
+- Never import across layers upwards (queries must not import services; services must not import routes).
+- Never recreate catch-all files such as `utils.js`, `helpers.js` or a `misc/` directory; put code in the most specific module.
+- Never duplicate the schema; change it only in `src/db/schema.js`.
+- Never create a test file that does not match `tests/*.test.js`; it will not run.
+- Never commit `taskr.db*`, `node_modules/`, `.env` or `.DS_Store` (covered by `.gitignore`).
 
 ## Database schema
 
