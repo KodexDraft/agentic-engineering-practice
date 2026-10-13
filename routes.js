@@ -17,7 +17,7 @@ const { authenticate } = require('./auth');
 const UserController = require('./UserController');
 const { getTasks, getTaskById } = require('./get-tasks');
 const { validateEmail, isNonEmptyString } = require('./utils');
-const { VALID_TASK_STATUSES } = require('./misc/constants');
+const { VALID_TASK_STATUSES } = require('./src/utils/constants');
 
 // ─── Health ──────────────────────────────────────────────────────────────────
 
