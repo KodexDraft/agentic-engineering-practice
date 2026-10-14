@@ -19,10 +19,9 @@ Follow these steps:
 7. If the current branch is `main`, say so and propose a branch name based on the diff (for example `feat/user-profile-validation` or `fix/empty-task-title`). Ask the user to confirm or change it, then run `git switch -c <branch-name>`. Staged changes carry over.
    - If already on another branch, keep using it.
 8. Infer a concise commit message in Conventional Commits format from the staged diff (for example `fix: handle empty task title`). No body unless it adds useful context.
-9. Display the proposed commit message and ask for confirmation before committing.
-10. After confirmation, run:
+9. Do not ask for confirmation of the message. Run:
     ```bash
     git commit -m "<generated commit message>"
     git push -u origin <current-branch>
     ```
-11. Report the commit hash and confirm the push succeeded. Suggest `/commit-push-pr` when the user is ready to open a pull request.
+10. Report the commit hash and the commit message used, and confirm the push succeeded. Suggest `/commit-push-pr` when the user is ready to open a pull request.

@@ -18,20 +18,19 @@ Follow these steps:
 6. Run `git diff --cached` to review the staged changes.
 7. If the current branch is `main`, do not commit yet. Propose a branch name based on the staged diff (for example `feat/user-profile-validation`), ask the user to confirm or change it, then run `git switch -c <branch-name>`. Staged changes carry over to the new branch.
 8. Infer a concise commit message in Conventional Commits format from the staged diff (for example `feat: add user profile validation`). No body unless it adds useful context.
-9. Display the proposed commit message and ask for confirmation before committing.
-10. After confirmation, run:
+9. Do not ask for confirmation of the message. Run:
     ```bash
     git commit -m "<generated commit message>"
     ```
-11. Verify that GitHub CLI is installed and authenticated with `gh auth status`.
+10. Verify that GitHub CLI is installed and authenticated with `gh auth status`.
     - If it is unavailable or not logged in, stop and explain that GitHub CLI must be installed and authenticated (`gh auth login`). The commit is already made locally; say so.
-12. Push the branch and set upstream:
+11. Push the branch and set upstream:
     ```bash
     git push -u origin <current-branch>
     ```
-13. Create a pull request:
+12. Create a pull request:
     ```bash
     gh pr create --fill
     ```
     `--fill` uses the commit message for the PR title and body. With several commits, the title comes from the first one.
-14. Return the URL of the created pull request.
+13. Report the commit message used and return the URL of the created pull request.
