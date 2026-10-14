@@ -74,6 +74,14 @@ Jest config is in `package.json`; `testMatch` is `tests/*.test.js`, so a test fi
 
 Each test file sets `process.env.NODE_ENV = 'test'` as its first line, before requiring `../src/index`, so that `src/db/connection.js` uses the in-memory database. It then calls `createSchema(db)` in `beforeAll` and clears every table in `beforeEach`. Follow this pattern for new tests. Requests go through `supertest` against the exported `app`.
 
+## Verification
+
+After completing any significant change, run `/verify-app` before committing. Do not commit if any tests are failing.
+
+The test suite uses Supertest and covers all API endpoints, so a passing run confirms the full application is working correctly.
+
+To commit, use `/commit-branch` (commit and push on a branch), `/commit-main` (commit and push on main) or `/commit-push-pr` (commit, push and open a pull request). All three stage the changes after confirmation and run `npm test -- --runInBand` before committing, so `/verify-app` does not need to be run separately first.
+
 ## Conventions seen in the code
 
 - Errors are returned as `{ error: '<message>' }` with 400/404/409.
