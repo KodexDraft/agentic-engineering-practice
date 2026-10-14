@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test)",
+      "Bash(npm run test:watch)",
+      "Bash(npm run dev)",
+      "Bash(npm start)",
+      "Bash(npm run db:seed)",
+      "Bash(npm run db:reset)",
+      "Bash(npx jest:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(rm -r -f *)",
+      "Bash(rm -f -r *)",
+      "Bash(rm --recursive *)",
+      "Bash(curl:*)",
+      "Bash(wget:*)"
+    ]
+  }
+}
