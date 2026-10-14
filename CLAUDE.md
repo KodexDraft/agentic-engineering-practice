@@ -80,7 +80,7 @@ After completing any significant change, run `/verify-app` before committing. Do
 
 The test suite uses Supertest and covers all API endpoints, so a passing run confirms the full application is working correctly.
 
-To commit, use `/commit-branch` (commit and push on a branch), `/commit-main` (commit and push on main) or `/commit-push-pr` (commit, push and open a pull request). All three stage the changes after confirmation and run `npm test -- --runInBand` before committing, so `/verify-app` does not need to be run separately first.
+To commit, use `/commit-branch` (commit and push on a branch), `/commit-main` (commit and push on main) or `/commit-push-pr` (commit, push and open a pull request). All three stage the changes after confirmation. Only `/commit-main` also runs `npm test -- --runInBand` before committing, because it pushes straight to main; for `/commit-branch` and `/commit-push-pr`, run `/verify-app` yourself before committing.
 
 ## Conventions seen in the code
 

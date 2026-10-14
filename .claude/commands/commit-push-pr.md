@@ -1,6 +1,6 @@
 ---
 description: Commit all changes, push the current branch to origin, and open a pull request
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git branch:*), Bash(git switch:*), Bash(npm test:*), Bash(gh --version), Bash(gh auth status), Bash(gh pr create:*)
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*), Bash(git branch:*), Bash(git switch:*), Bash(gh --version), Bash(gh auth status), Bash(gh pr create:*)
 ---
 
 Commit the working changes, push the current branch to `origin`, and open a pull request.
@@ -13,24 +13,22 @@ Follow these steps:
    - Warn if `.env`, `taskr.db*`, `node_modules/` or `.DS_Store` show up; they must never be committed.
 4. Check for staged changes with `git diff --cached --quiet`.
    - Exit code 0 means there are NO staged changes. Stop and tell the user: "No changes to commit."
-5. Run `npm test -- --runInBand`.
-   - If any test fails, do not commit. Report the specific failures and stop.
-6. Run `git diff --cached` to review the staged changes.
-7. If the current branch is `main`, do not commit yet. Propose a branch name based on the staged diff (for example `feat/user-profile-validation`), ask the user to confirm or change it, then run `git switch -c <branch-name>`. Staged changes carry over to the new branch.
-8. Infer a concise commit message in Conventional Commits format from the staged diff (for example `feat: add user profile validation`). No body unless it adds useful context.
-9. Do not ask for confirmation of the message. Run:
+5. Run `git diff --cached` to review the staged changes.
+6. If the current branch is `main`, do not commit yet. Propose a branch name based on the staged diff (for example `feat/user-profile-validation`), ask the user to confirm or change it, then run `git switch -c <branch-name>`. Staged changes carry over to the new branch.
+7. Infer a concise commit message in Conventional Commits format from the staged diff (for example `feat: add user profile validation`). No body unless it adds useful context.
+8. Do not ask for confirmation of the message. Run:
     ```bash
     git commit -m "<generated commit message>"
     ```
-10. Verify that GitHub CLI is installed and authenticated with `gh auth status`.
+9. Verify that GitHub CLI is installed and authenticated with `gh auth status`.
     - If it is unavailable or not logged in, stop and explain that GitHub CLI must be installed and authenticated (`gh auth login`). The commit is already made locally; say so.
-11. Push the branch and set upstream:
+10. Push the branch and set upstream:
     ```bash
     git push -u origin <current-branch>
     ```
-12. Create a pull request:
+11. Create a pull request:
     ```bash
     gh pr create --fill
     ```
     `--fill` uses the commit message for the PR title and body. With several commits, the title comes from the first one.
-13. Report the commit message used and return the URL of the created pull request.
+12. Report the commit message used and return the URL of the created pull request.
